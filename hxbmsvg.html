@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汗血宝马跑下山</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .title {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            font-weight: bold;
+            color: #8B4513;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        
+        /* 马的跑步动画 */
+        @keyframes run {
+            0% {
+                transform: translateX(-200px) translateY(0);
+            }
+            50% {
+                transform: translateX(150px) translateY(-30px);
+            }
+            100% {
+                transform: translateX(1100px) translateY(200px);
+            }
+        }
+        
+        /* 马的腿部摆动 */
+        @keyframes legMove {
+            0%, 100% {
+                transform: rotate(0deg);
+                transform-origin: 50% 0;
+            }
+            25% {
+                transform: rotate(25deg);
+                transform-origin: 50% 0;
+            }
+            50% {
+                transform: rotate(-25deg);
+                transform-origin: 50% 0;
+            }
+            75% {
+                transform: rotate(25deg);
+                transform-origin: 50% 0;
+            }
+        }
+        
+        /* 头部摆动 */
+        @keyframes headMove {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(2deg);
+            }
+        }
+        
+        .horse-group {
+            animation: run 10s ease-in-out infinite;
+        }
+        
+        .front-leg-1, .front-leg-2 {
+            animation: legMove 0.6s ease-in-out infinite;
+        }
+        
+        .back-leg-1, .back-leg-2 {
+            animation: legMove 0.6s ease-in-out infinite 0.3s;
+        }
+        
+        .horse-head {
+            animation: headMove 0.6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">汗血宝马跑下山</div>
+        
+        <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+            <!-- 天空渐变 -->
+            <defs>
+                <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#E0F6FF;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="mountainGradient1" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#8B7355;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#654321;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="mountainGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#A0826D;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#704214;stop-opacity:1" />
+                </linearGradient>
+                
+                <filter id="shadow">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                    <feOffset dx="2" dy="2" result="offsetblur"/>
+                    <feComponentTransfer>
+                        <feFuncA type="linear" slope="0.3"/>
+                    </feComponentTransfer>
+                    <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            
+            <!-- 背景 -->
+            <rect width="1200" height="800" fill="url(#skyGradient)"/>
+            
+            <!-- 远山（淡色） -->
+            <path d="M 0 400 Q 200 250 400 400 T 800 400 T 1200 400 L 1200 800 L 0 800 Z" 
+                  fill="#B0B0D0" opacity="0.4"/>
+            
+            <!-- 左边的山 -->
+            <path d="M -100 450 L 300 200 L 700 600 L 200 800 Z" 
+                  fill="url(#mountainGradient1)"/>
+            
+            <!-- 右边的山 -->
+            <path d="M 600 500 L 1000 150 L 1400 700 L 800 800 Z" 
+                  fill="url(#mountainGradient2)"/>
+            
+            <!-- 草地 -->
+            <rect y="700" width="1200" height="100" fill="#228B22"/>
+            
+            <!-- 草叶装饰 -->
+            <g fill="#32CD32" opacity="0.6">
+                <circle cx="150" cy="720" r="3"/>
+                <circle cx="200" cy="730" r="2.5"/>
+                <circle cx="250" cy="725" r="3"/>
+                <circle cx="800" cy="740" r="2.5"/>
+                <circle cx="900" cy="725" r="3"/>
+                <circle cx="1050" cy="735" r="2.5"/>
+            </g>
+            
+            <!-- 马的组合（可以动画） -->
+            <g class="horse-group" filter="url(#shadow)">
+                <!-- 马身 -->
+                <ellipse cx="100" cy="450" rx="70" ry="50" fill="#8B4513"/>
+                
+                <!-- 马颈 -->
+                <path d="M 155 420 Q 180 380 200 340" 
+                      stroke="#8B4513" stroke-width="35" fill="none" stroke-linecap="round"/>
+                
+                <!-- 马头 -->
+                <g class="horse-head">
+                    <ellipse cx="210" cy="310" rx="25" ry="35" fill="#654321"/>
+                    
+                    <!-- 马鼻 -->
+                    <ellipse cx="235" cy="320" rx="8" ry="12" fill="#5C4033"/>
+                    
+                    <!-- 眼睛 -->
+                    <circle cx="220" cy="295" r="4" fill="#000"/>
+                    <circle cx="222" cy="293" r="1.5" fill="#FFF"/>
+                    
+                    <!-- 耳朵 -->
+                    <ellipse cx="200" cy="280" rx="8" ry="18" fill="#654321"/>
+                    <ellipse cx="200" cy="282" rx="4" ry="12" fill="#8B4513"/>
+                </g>
+                
+                <!-- 鬃毛 -->
+                <path d="M 190 320 Q 185 300 180 280 Q 175 260 170 240" 
+                      stroke="#A0522D" stroke-width="8" fill="none" stroke-linecap="round"/>
+                
+                <!-- 前左腿 -->
+                <g class="front-leg-1">
+                    <line x1="70" y1="500" x2="60" y2="600" stroke="#654321" stroke-width="20" stroke-linecap="round"/>
+                    <ellipse cx="60" cy="610" rx="12" ry="15" fill="#3E2723"/>
+                </g>
+                
+                <!-- 前右腿 -->
+                <g class="front-leg-2">
+                    <line x1="110" y1="500" x2="130" y2="600" stroke="#654321" stroke-width="20" stroke-linecap="round"/>
+                    <ellipse cx="130" cy="610" rx="12" ry="15" fill="#3E2723"/>
+                </g>
+                
+                <!-- 后左腿 -->
+                <g class="back-leg-1">
+                    <line x1="20" y1="490" x2="10" y2="590" stroke="#654321" stroke-width="20" stroke-linecap="round"/>
+                    <ellipse cx="10" cy="600" rx="12" ry="15" fill="#3E2723"/>
+                </g>
+                
+                <!-- 后右腿 -->
+                <g class="back-leg-2">
+                    <line x1="60" y1="490" x2="80" y2="590" stroke="#654321" stroke-width="20" stroke-linecap="round"/>
+                    <ellipse cx="80" cy="600" rx="12" ry="15" fill="#3E2723"/>
+                </g>
+                
+                <!-- 尾巴 -->
+                <path d="M 20 470 Q 0 450 -20 500" 
+                      stroke="#A0522D" stroke-width="12" fill="none" stroke-linecap="round"/>
+                
+                <!-- 闪闪发光的效果（象征汗血） -->
+                <circle cx="100" cy="430" r="8" fill="#FFD700" opacity="0.7"/>
+                <circle cx="130" cy="470" r="6" fill="#FFA500" opacity="0.6"/>
+            </g>
+            
+            <!-- 云朵装饰 -->
+            <g fill="#FFF" opacity="0.7">
+                <ellipse cx="200" cy="100" rx="40" ry="25"/>
+                <ellipse cx="240" cy="110" rx="35" ry="20"/>
+                <ellipse cx="160" cy="110" rx="30" ry="18"/>
+                
+                <ellipse cx="900" cy="150" rx="50" ry="30"/>
+                <ellipse cx="960" cy="165" rx="40" ry="25"/>
+                <ellipse cx="840" cy="165" rx="35" ry="20"/>
+            </g>
+        </svg>
+    </div>
+</body>
+</html>
